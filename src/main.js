@@ -8,6 +8,8 @@ import './assets/css/base.less'
 import './plugins/element.js'
 import './fonts/iconfont.css'
 
+import './api'
+
 // Vue.use(ElementUI)
 
 Vue.config.productionTip = false

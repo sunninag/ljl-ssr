@@ -19,7 +19,7 @@
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" >登录</el-button>
+          <el-button type="primary" @click = "islogin">登录</el-button>
           <el-button type="info" @click = "reset">重置</el-button>
         </el-form-item>
       </el-form>
@@ -54,6 +54,16 @@ export default {
     reset () {
       this.$refs.reset.resetFields()
       this.loginForm.username = this.loginForm.password = ''
+    },
+    islogin () {
+      this.$refs.reset.validate(async valid => {
+        if (!valid) return
+        const { data: { data, meta } } = await this.$http.post('login', this.loginForm)
+        if (meta.status !== 200) return this.$message.error(meta.msg)
+        this.$message.success('登录成功')
+        sessionStorage.setItem('token', data.token)
+        this.$router.push('/home')
+      })
     }
   }
 }
